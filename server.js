@@ -6,14 +6,23 @@
  * Require Statements
  *************************/
 const express = require("express")
+const expressLayouts = require("express-ejs-layouts") // Importar express-ejs-layouts
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 
-/* ***********************
- * Routes
- *************************/
+// View Engine and Templates
+app.set("view engine", "ejs") // Configurar EJS como el motor de vistas
+app.use(expressLayouts) // Activar layouts en EJS
+app.set("layout", "./layouts/layout") // Definir el archivo base para los layouts
+
+// Servir archivos estáticos (CSS, imágenes, JS)
 app.use(static)
+
+// Index route
+app.get("/", function (req, res) {
+  res.render("index", { title: "Home" });
+});
 
 /* ***********************
  * Local Server Information
