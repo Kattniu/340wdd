@@ -4,3 +4,194 @@
 *:after {
   box-sizing: border-box;
 }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  text-align: center;
+}
+
+/* header.ejs */
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color:white;
+  font-size: 1.2rem;
+}
+#top-header a {
+  color:black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#top-header a:hover {
+  text-decoration: underline;
+}
+/*NAVIGATION.EJS*/
+nav {
+  background-color: black;
+  padding: 10px 0;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  color: white;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+nav ul li:hover {
+  background-color: gray;
+  transition: 0.3s;
+}
+/*INDEX.EJS*/
+h1 {
+  font-size: 2rem;
+  margin-top: 20px;
+}
+
+.container-delorean {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  max-width: 90%;
+}
+.delorean-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+
+}
+/*INDEX.EJS: DMC texto sobre la imagen */
+.text-overlay {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  color: rgb(100, 172, 214);
+  text-align: left;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 15px;
+  border-radius: 8px;
+}
+.text-overlay h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.text-overlay p {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+#button-own img {
+  width: 150px;
+  margin-top: 10px;
+}
+
+/* Contenedor principal */
+#main-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 20px auto;
+  max-width: 90%;
+}
+#reviews, #upgrades {
+  width: 45%;
+  background: #f4f4f4;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#reviews h2, #upgrades h2 {
+  font-size: 1.5rem;
+}
+
+#reviews ul {
+  list-style: none;
+  padding: 0;
+}
+
+#reviews li {
+  font-size: 1rem;
+  padding: 5px 0;
+}
+
+.container-upgrades {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.upgrade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upgrade img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.upgrade a {
+  margin-top: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #000;
+}
+
+.upgrade a:hover {
+  color: #0077cc;
+}
+
+/*footer.ejs*/
+footer {
+  background-color: #000;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #top-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #main-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #reviews, #upgrades {
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .container-upgrades {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .text-overlay {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 50%;
+    text-align: center;
+  }
+}
