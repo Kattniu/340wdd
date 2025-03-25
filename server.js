@@ -1,7 +1,3 @@
-/* ******************************************
- * This server.js file is the primary file of the 
- * application. It is used to control the project.
- *******************************************/
 /* ***********************
  * Require Statements
  *************************/
@@ -10,19 +6,46 @@ const expressLayouts = require("express-ejs-layouts") // Importar express-ejs-la
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
+const baseController = require("./controllers/baseController");
+const inventoryRoute = require("./routes/inventoryRoute");
+const utilities = require("./utilities/");
 
+/* ***********************
 // View Engine and Templates
+*************************/
 app.set("view engine", "ejs") // Configurar EJS como el motor de vistas
 app.use(expressLayouts) // Activar layouts en EJS
 app.set("layout", "./layouts/layout") // Definir el archivo base para los layouts
 
+/* ***********************
+*Routes
+*************************/
 // Servir archivos estáticos (CSS, imágenes, JS)
 app.use(static)
-
 // Index route
-app.get("/", function (req, res) {
-  res.render("index", { title: "Home" });
-});
+app.get("/", utilities.handleErrors(baseController.buildHome));
+//inventory route
+app.use("/inv", inventoryRoute)
+
+/* ******************************************
+// File Not Found Route - must be last route in list
+// ****************************************** */
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  res.render("errors/error", {
+    title: err.status || 'Server Error',
+    message: err.message,
+    nav
+  })
+})
 
 /* ***********************
  * Local Server Information
