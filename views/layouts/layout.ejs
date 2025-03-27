@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <%- include('partials/head') %>
-</head>
+  <%- include('../layouts/partials/head.ejs') %>
+
   <body>
     <div id="wrapper">
-    <%- include('partials/header') %>
-    <%- include('partials/navigation') %>
-    
-    <main>
-      <%- body %>  <!-- Aquí se insertará el contenido dinámico -->
-    </main>
+      <%- include('../layouts/partials/header') %> <%-
+      include('../layouts/partials/navigation')%>
 
-    <%- include('partials/footer') %>
+      <main><%- body %></main>
+
+      <%- include('../layouts/partials/footer') %>
     </div>
   </body>
 </html>
