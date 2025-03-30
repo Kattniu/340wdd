@@ -13,14 +13,17 @@ VALUES(
 UPDATE account
 SET account_type = 'Admin'
 WHERE account_id = 1;
+
 DELETE FROM account
 WHERE account_id = 1;
+
 UPDATE inventory
 SET inv_description = REPLACE(
         inv_description,
         'the small interiors',
         'a huge interior'
     );
+    
 SELECT inv_make,
     inv_model,
     classification_name
