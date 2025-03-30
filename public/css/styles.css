@@ -195,3 +195,30 @@ footer {
     text-align: center;
   }
 }
+/* Estilo general para la vista de detalles */
+.vehicle-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.vehicle-detail img {
+  max-width: 100%;  /* Hace que la imagen ocupe todo el ancho disponible */
+  height: auto;     /* Mantiene la proporción de la imagen */
+}
+
+@media (min-width: 768px) {
+  .vehicle-detail {
+      flex-direction: row;  /* En pantallas grandes, la imagen y los detalles estarán lado a lado */
+  }
+  .vehicle-detail img {
+      width: 50%;  /* La imagen ocupa la mitad del ancho en pantallas grandes */
+  }
+}
+
+@media (max-width: 767px) {
+  .vehicle-detail {
+      flex-direction: column;  /* En pantallas pequeñas, los detalles y la imagen se apilan */
+  }
+}

@@ -25,6 +25,7 @@ app.use(static)
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome));
 //inventory route
+//Esto significa que cualquier ruta de inventario, como /inventory/detail/:inv_id, ahora será manejada por el controlador adecuado.
 app.use("/inv", inventoryRoute)
 
 /* ******************************************

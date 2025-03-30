@@ -1,3 +1,4 @@
+
 const pool = require("../database/index.js");
 
 /* ***************************
@@ -23,7 +24,10 @@ async function getInventoryByClassificationId(classification_id) {
     );
     return data.rows;
   } catch (error) {
-    console.error("getclassificationsbyid error " + error);
+    console.error("Error in getclassificationsbyid error " + error);
+    throw error; // Propagate the error to the caller
+    //Si occure un error al consultar la base de datos, se lanza el error para que pueda ser manejado por el controlador o middleware correspondiente.
+    //Esto permite que el error sea manejado adecuadamente y se pueda enviar una respuesta adecuada al cliente.
   }
 }
 
@@ -34,7 +38,8 @@ async function getInventoryItemById(inv_id) {
       [inv_id]
     );
     return data.rows[0];
-  } catch (error) {
+  } 
+  catch (error) {
     console.error("Error fetching inventory item id");
   }
   throw error;

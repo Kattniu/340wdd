@@ -1,3 +1,4 @@
+//CREAR LA FUNCION PARA GENERAR EL HTML con detalles del vehiculo
 const invModel = require("../models/inventory-model");
 const Util = {};
 
