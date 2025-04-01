@@ -1,5 +1,5 @@
-const invModel = require("../models/inventory-model"); // Import the inventory model
-const utilities = require("../utilities/"); // Import the utilities module
+const invModel = require("../models/inventory-model");
+const utilities = require("../utilities/");
 
 const invCont = {};
 
@@ -7,36 +7,26 @@ const invCont = {};
  *  Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
-  const classification_id = req.params.classificationId;
-  const data = await invModel.getInventoryByClassificationId(classification_id);
-  const grid = await utilities.buildClassificationGrid(data);
-  let nav = await utilities.getNav();
-  const className = data[0].classification_name;
+  const classification_id = req.params.classificationId
+  const data = await invModel.getInventoryByClassificationId(classification_id)
+  const grid = await utilities.buildClassificationGrid(data)
+  let nav = await utilities.getNav()
+  const className = data[0].classification_name
   res.render("./inventory/classification", {
     title: className + " vehicles",
     nav,
     grid,
-  });
-};
+  })
+}
 
 /* ***************************
- *  Build vehicle detail view - crear la funcio del controlador  para el detalle del vehiculo
- * Controlador de inventario que maneja la vista de detalle del vehiculo
+ *  Build vehicle detail view
  * ************************** */
 invCont.buildItemDetailById = async function (req, res, next) {
-  try {   
-    //El parametro inv_id es tomado de la URL
-    //Ejemplo: /inv/detail/1, el 1 es el ID del vehiculo
-    //lo que permite obtener el ID del vehiculo que se desea ver
-    const inv_id = req.params.inv_id; //Obtenemos el ID del vehiculo de la URL
-
-    //Usas invmodel.getInventoryItemById para obtener los datos del vehiculo por ID
-    const vehicleData = await invModel.getInventoryItemById(inv_id);//Obtenemos los datos del vehiculo por ID
-    
-    //Es importante que esta funcion en utilities este correctamente definida para generar el html que necesitas para la vista
+  try {
+    const inv_id = req.params.inv_id;
+    const vehicleData = await invModel.getInventoryItemById(inv_id);
     const vehicleHTML = await utilities.buildItemDetails(vehicleData);
-    //Construimos el HTML del vehiculo usando la funcion buildItemDetails de utilities
-    //La funcion buildItemDetails es la que genera el HTML para mostrar los detalles del vehiculo
     let nav = await utilities.getNav();
     res.render("./inventory/vehicle-details", {
       title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
@@ -46,6 +36,124 @@ invCont.buildItemDetailById = async function (req, res, next) {
   } catch (error) {
     console.error("Error building vehicle detail view");
     next(error);
+  }
+};
+
+/* ***************************
+ *  Build the Management view
+ * ************************** */
+invCont.buildMgmtView = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    res.render("./inventory/management", {
+      title: "Vehicle Management",
+      nav,
+      flashMessages: req.flash(),
+    });
+  } catch (error) {
+    console.error("Error rendering management view:", error);
+    next(error);
+  }
+};
+/* ***************************
+ *  Build the Add New Classification View, GET Request
+ * ************************** */
+
+invCont.buildAddClassificationView = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    res.render("inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+      flashMessages: req.flash(),
+    });
+  } catch (error) {
+    console.error("Error rendering add classification view", error);
+    next(error);
+  }
+};
+
+/* ***************************
+ *  POST Request, take data from the User inserted in the New Classification Form
+ * ************************** */
+
+invCont.addNewClassificationFromUser = async function (req, res, next) {
+  try {
+    const classification_name = req.body.classification_name;
+    const newClassification = await invModel.insertNewClassification(
+      classification_name
+    );
+    req.flash(
+      "success",
+      `The classification "${classification_name}" was successfully added.`
+    );
+    res.redirect("/inv");
+  } catch (error) {
+    console.error("Error adding classification:", error);
+    req.flash("error", "Failed to add classification. Please try again."); // Generic error message
+    res.redirect("/add-classification"); // Redirect back to the form
+  }
+};
+
+/* ***************************
+ *  Build the dropdown in the add new vehicle form
+ * ************************** */
+
+invCont.buildAddVehicle = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav();
+    let dropdown = await utilities.getClassificationsDropdown();
+    res.render("./inventory/add-inventory", {
+      title: "Add New Vehicle",
+      nav,
+      dropdown,
+      flashMessages: req.flash(),
+    });
+  } catch (error) {
+    console.error("Error rendering add vehicle view", error);
+    next(error);
+  }
+};
+
+/* ***************************
+ *  POST request, take data from the user to add a new vehicle
+ * ************************** */
+invCont.addNewVehicleFromUser = async function (req, res, next) {
+  try {
+    const {
+      classification,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    } = req.body; // Receives for data.
+
+    const newVehicle = await invModel.insertNewVehicle({
+      classification_id: classification, // Mapping dropdown value to classification_id
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    }); // Pass data to the model
+    req.flash(
+      "success",
+      `The vehicle "${inv_make} ${inv_model}" was successfully added.`
+    );
+    res.redirect("/inv");
+  } catch (error) {
+    console.error("Error adding vehicle:", error);
+    req.flash("error", "Failed to add vehicle. Please try again.");
+    res.redirect("/add-inventory");
   }
 };
 

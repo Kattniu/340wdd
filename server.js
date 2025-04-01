@@ -4,29 +4,33 @@
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts") // Importar express-ejs-layouts
 const env = require("dotenv").config()
-const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController");
+const pool = require("./database")
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities/");
 
-/* ***********************
+const app = express()
+/* *********************************************************************************************
 // View Engine and Templates
 *************************/
 app.set("view engine", "ejs") // Configurar EJS como el motor de vistas
 app.use(expressLayouts) // Activar layouts en EJS
 app.set("layout", "./layouts/layout") // Definir el archivo base para los layouts
 
-/* ***********************
+/* ***************************************************************************************
 *Routes
 *************************/
 // Servir archivos estáticos (CSS, imágenes, JS)
-app.use(static)
-// Index route
-app.get("/", utilities.handleErrors(baseController.buildHome));
+app.use(require("./routes/static"))
+//app.use(static)
+
+// Index route - actividad unit 3 
+app.get("/", utilities.handleErrors(baseController.buildHome))
+//app.get("/", utilities.handleErrors(baseController.buildHome));
 //inventory route
 //Esto significa que cualquier ruta de inventario, como /inventory/detail/:inv_id, ahora será manejada por el controlador adecuado.
-app.use("/inv", inventoryRoute)
+app.use("/inv", require("./routes/inventoryRoute"))
 
 /* ******************************************
 // File Not Found Route - must be last route in list
