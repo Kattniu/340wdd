@@ -47,11 +47,16 @@ app.use("/inv", require("./routes/inventoryRoute"))
 
 
 /* ******************************************************************************************
- *Manejo de Rutas No Encontradas (404 - 505) 
+* Middleware de Manejo de Errores
+* Place after all other middleware !! 
+*Manejo de Rutas No Encontradas (404 - 505) 
  ****************************************** */
 // Esta ruta se activa si ninguna otra coincide, generando un error 404
+//Este es un middleware de Express para manejar errores.
+// En Express, los middlewares de manejo de errores tienen 4 parámetros:
+// err (error), req (solicitud), res (respuesta), y next (función para pasar al siguiente middleware
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav();
+  let nav = await utilities.getNav(); //Este codigo espera que se obtenga un onjeto nav 
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
   let title, message;
   if (err.status == 404) {
@@ -62,6 +67,7 @@ app.use(async (err, req, res, next) => {
       message,
       nav,
     });
+  //Error 500 - Server Error (error de servidor)  
   } else {
     title = "500 - Server Error";
     message = "The server couldn't process your request at this moment. Please try again later.";
@@ -73,19 +79,6 @@ app.use(async (err, req, res, next) => {
   }
 });
 
-/* ***********************************************************************************
-* Middleware de Manejo de Errores
-* Place after all other middleware !!
-***************************************/
-app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  res.render("errors/error", {
-    title: err.status || 'Server Error',
-    message: err.message,
-    nav
-  })
-})
 
 /* *************************************************
  * Configuración del Servidor (Host y Puerto)
