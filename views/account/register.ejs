@@ -1,0 +1,70 @@
+<h1><%= title %></h1>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <div class="error-box">
+    <ul class="error-list">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<div class="registration-form">
+  <form action="/account/register" method="post">
+    <div class="form-group">
+      <label for="firstname">First Name</label>
+      <input
+        type="text"
+        name="account_firstname"
+        id="firstname"
+        required
+        value="<%= locals.account_firstname %>"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="lastname">Last Name</label>
+      <input
+        type="text"
+        name="account_lastname"
+        id="lastname"
+        required
+        value="<%= locals.account_lastname %>"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        name="account_email"
+        id="email"
+        required
+        value="<%= locals.account_email %>"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <small class="password-warning">
+        Passwords must be at least 12 characters, containing a number, a capital letter, and a special character.
+      </small>
+      <input
+        type="password"
+        name="account_password"
+        id="password"
+        required
+        placeholder="Enter your password"
+        minlength="12"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+      />
+    </div>
+
+    <button type="submit" class="register-btn">
+      Register Now
+    </button>
+  </form>
+</div>

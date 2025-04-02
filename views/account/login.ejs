@@ -1,0 +1,29 @@
+<h1>Welcome to Your Account</h1>
+
+<%- messages() %>
+
+<div class="login-container">
+  <form id="loginForm" action="/account/login" method="post">
+    <div class="input-group">
+      <label for="account_email">Email Address</label>
+      <input type="email" name="account_email" placeholder="Enter your email" required />
+    </div>
+
+    <div class="input-group">
+      <label for="account_password">Password</label>
+      <input
+        type="password"
+        name="account_password"
+        placeholder="Enter your password"
+        required
+        aria-label="Password"
+      />
+    </div>
+
+    <button type="submit" class="submit-btn">Log In</button>
+  </form>
+
+  <p class="sign-up-link">Don't have an account?.
+    <a href="/account/register"> Sign-up</a>
+  </p>
+</div>
