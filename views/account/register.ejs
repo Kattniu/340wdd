@@ -3,13 +3,11 @@
 <%- messages() %>
 
 <% if (errors) { %>
-  <div class="error-box">
-    <ul class="error-list">
-      <% errors.array().forEach(error => { %>
-        <li><%= error.msg %></li>
-      <% }) %>
-    </ul>
-  </div>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
 <% } %>
 
 <div class="registration-form">

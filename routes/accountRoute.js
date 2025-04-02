@@ -12,6 +12,7 @@ const utilities = require('../utilities');
 // Voy a crear el controller de cuentas más adelante (por ahora lo importamos)
 const accountController = require('../controllers/accountController');
 
+const regValidate = require('../utilities/account-validation')
 
 /*******************************
 *******Deliver Login View***********
@@ -23,7 +24,13 @@ router.post(
     "/login",
     utilities.handleErrors(accountController.accountLogin)
   );
-  
+// Process the login attempt
+router.post(
+  "/login",
+  (req, res) => {
+    res.status(200).send('login process')
+  }
+)
 
 /****************************
  * Process Registration******
@@ -34,6 +41,12 @@ router.post(
   "/register",
   utilities.handleErrors(accountController.registerAccount)
 );
-
+// Process the registration data
+router.post(
+  "/register",
+  regValidate.registationRules(),
+  regValidate.checkRegData,
+  utilities.handleErrors(accountController.registerAccount)
+)
 
 module.exports = router;
