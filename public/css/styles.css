@@ -222,46 +222,42 @@ footer {
       flex-direction: column;  /* En pantallas pequeñas, los detalles y la imagen se apilan */
   }
 }
+
+/*LOGIN.EJS*/
 /* Estilo para el formulario de inicio de sesión */
 .login-container {
-  background-color: rgb(176, 207, 208);
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 40px;
+  background-color: #cbcdeb;
+  border-radius: 10px;
+  padding: 25px;
   width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
 }
 .input-group {
   margin-bottom: 20px;
 }
-
 .input-group label {
   display: block;
   font-size: 1rem;
   color: #666;
   margin-bottom: 5px;
 }
-
 .input-group input {
   width: 100%;
   padding: 12px;
   font-size: 1rem;
-  border: 1px solid #ddd;
+  border: 2px solid #e8e2e8;
   border-radius: 4px;
   margin-top: 5px;
 }
-
 .input-group input:focus {
   border-color: #4A90E2;
   outline: none;
 }
-
 .submit-btn {
-  background-color: #4A90E2;
+  background-color: #cd95e2;
   color: white;
   border: none;
   padding: 14px;
@@ -270,16 +266,14 @@ footer {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .submit-btn:hover {
-  background-color: #357ABD;
+  background-color: #92bce6;
+  color: blueviolet;
 }
-
 .sign-up-link {
   text-align: center;
   margin-top: 20px;
 }
-
 .sign-up-link a {
   text-decoration: none;
   color: #4A90E2;
@@ -289,26 +283,27 @@ footer {
 .sign-up-link a:hover {
   text-decoration: underline;
 }
+
+/*REGISTER.EJS*/
 /*registro para nuevo account*/
 /* Estilo del contenedor principal */
 .registration-form {
-  background-color: #fafafa;
+  background-color: #e1eff6;
   border-radius: 10px;
   padding: 25px;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
+  margin-bottom: 30px;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
 }
-
 /* Título del formulario */
 h1 {
   text-align: center;
   font-size: 2rem;
-  color: #333;
+  color: #6bb4b6;
   margin-bottom: 20px;
 }
-
 /* Estilos para el área de los errores */
 .error-box {
   background-color: #f8d7da;
@@ -316,26 +311,22 @@ h1 {
   margin-bottom: 20px;
   border-radius: 8px;
 }
-
 .error-list {
   margin: 0;
   padding-left: 20px;
   list-style-type: square;
   color: #721c24;
 }
-
 /* Estilo para cada grupo de entrada */
 .form-group {
   margin-bottom: 20px;
 }
-
 .form-group label {
   display: block;
   font-size: 1rem;
   color: #555;
   margin-bottom: 8px;
 }
-
 .form-group input {
   width: 100%;
   padding: 12px;
@@ -343,22 +334,19 @@ h1 {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-
 .form-group input:focus {
   outline: none;
   border-color: #007bff;
 }
-
 /* Pautas de contraseña */
 .password-warning {
   font-size: 0.9rem;
   color: #6c757d;
   margin-top: 5px;
 }
-
 /* Estilo del botón de registro */
 .register-btn {
-  background-color: #28a745;
+  background-color: #d15ccb;
   color: white;
   padding: 14px;
   border: none;
@@ -368,7 +356,6 @@ h1 {
   width: 100%;
   transition: background-color 0.3s ease;
 }
-
 .register-btn:hover {
-  background-color: #218838;
+  background-color: #54bcd1;
 }
