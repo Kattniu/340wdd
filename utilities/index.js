@@ -83,6 +83,20 @@ Util.buildItemDetails = async function (vehicleData) {
   `;
   return vehicleHTML;
 };
+/* **************************************
+ * Build the dropdown for the add vehicles page
+ * ************************************ */
+Util.getClassificationsDropdown = async function (req, res, next) {
+  let data = await invModel.getClassifications();
+  let dropdown = '<select id="classification" name="classification" required>';
+  dropdown +=
+    '<option value="" selected>-- Choose a Classification --</option>'; // Default option
+  data.rows.forEach((row) => {
+    dropdown += `<option value="${row.classification_id}">${row.classification_name}</option>`;
+  });
+  dropdown += "</select>";
+  return dropdown;
+};
 
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);

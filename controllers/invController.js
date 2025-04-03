@@ -155,4 +155,5 @@ invCont.addNewVehicleFromUser = async function (req, res, next) {
   }
 };
 
+//Al hacer esto, estás asegurando que todas las funciones que has definido en el objeto invCont estén disponibles para usarse en tus rutas.
 module.exports = invCont;

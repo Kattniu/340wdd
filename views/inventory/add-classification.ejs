@@ -7,7 +7,7 @@
 <% if (flashMessages.error) { %> <!-- Mostrar mensaje de error -->
   <div class="msg-error"><%= flashMessages.error %></div>
 <% } %>
-
+<div class="classification-form"> 
 <!-- Formulario para agregar nueva clasificación -->
 <form action="/inv/add-classification" method="POST">
   <label for="classification_name">Classification Name:</label>
@@ -23,3 +23,4 @@
   />
   <button type="submit">Add Classification</button>
 </form>
+</div>
