@@ -1,0 +1,15 @@
+<h1><%- title %></h1>
+
+<!-- Mostrar mensajes flash -->
+<% if (flashMessages.success) { %>
+  <div class="msg-success"><%= flashMessages.success %></div>
+<% } %>
+<% if (flashMessages.error) { %>
+  <div class="msg-error"><%= flashMessages.error %></div>
+<% } %>
+
+<!-- Enlaces para agregar clasificación e inventario -->
+<ul class="inventory-options">
+  <li><a href="/inv/add-classification"> ➕ Add New Classification</a></li>
+  <li><a href="/inv/add-inventory">Add New Vehicle 🚗</a></li>
+</ul>

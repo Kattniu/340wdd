@@ -1,0 +1,38 @@
+<h1><%- title %></h1>
+
+<!-- Mostrar mensajes flash de éxito o error -->
+<% if (flashMessages.success) { %> <!-- Mostrar mensaje de exito -->
+  <div class="msg-success"><%= flashMessages.success %></div>
+<% } %>
+<% if (flashMessages.error) { %> <!-- Mostrar mensaje de error -->
+  <div class="msg-error"><%= flashMessages.error %></div>
+<% } %>
+
+<!-- Formulario para agregar nueva clasificación -->
+<form action="/inv/add-classification" method="POST" id="classificationForm">
+  <label for="classification_name">Classification Name:</label>
+  <!-- Usa required para que el usuario no pueda enviarlo vacío.
+  Campo de entrada:  Permito solo letra y numero (pattern="^[a-zA-Z0-9]+$")-->   
+  <input   
+    type="text" 
+    id="classification_name" 
+    name="classification_name" 
+    pattern="^[a-zA-Z0-9]+$" 
+    title="Only letters and numbers are allowed. No spaces or special characters." 
+    required 
+  />
+  <button type="submit">Add Classification</button>
+</form>
+
+<script>
+  // Validación en cliente para evitar espacios o caracteres especiales
+  document.getElementById("classificationForm").addEventListener("submit", function(event) {
+    const classificationInput = document.getElementById("classification_name").value;
+    const validPattern = /^[a-zA-Z0-9]+$/;
+
+    if (!validPattern.test(classificationInput)) {
+      event.preventDefault();
+      alert("The classification name can only contain letters and numbers. No spaces or special characters.");
+    }
+  });
+</script>

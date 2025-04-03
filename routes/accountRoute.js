@@ -20,27 +20,21 @@ const regValidate = require('../utilities/account-validation')
 //CREAR LA RUTA GET PARA "My Account"
 // Route to build login view
 router.get("/login", utilities.handleErrors(accountController.buildLogin))
-router.post(
-    "/login",
-    utilities.handleErrors(accountController.accountLogin)
-  );
-// Process the login attempt
+
+// Process the login data 
 router.post(
   "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
-)
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
+);
 
 /****************************
  * Process Registration******
 *****************************/
 
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
-router.post(
-  "/register",
-  utilities.handleErrors(accountController.registerAccount)
-);
+
 // Process the registration data
 router.post(
   "/register",

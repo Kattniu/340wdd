@@ -1,10 +1,8 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
-
 const invCont = {};
-
 /* ***************************
- *  Build inventory by classification view
+ *Build inventory by classification view
  * ************************** */
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
@@ -38,7 +36,6 @@ invCont.buildItemDetailById = async function (req, res, next) {
     next(error);
   }
 };
-
 /* ***************************
  *  Build the Management view
  * ************************** */
@@ -98,7 +95,8 @@ invCont.addNewClassificationFromUser = async function (req, res, next) {
 /* ***************************
  *  Build the dropdown in the add new vehicle form
  * ************************** */
-
+  //Usamos la función buildClassificationList para obtener la lista de clasificaciones 
+  // //y pasársela al formulario. Esta lista aparecerá como las opciones dentro del elemento <select> en la vista.
 invCont.buildAddVehicle = async function (req, res, next) {
   try {
     let nav = await utilities.getNav();
