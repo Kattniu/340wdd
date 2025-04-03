@@ -8,36 +8,115 @@
     <div class="msg-error"><%= flashMessages.error %></div>
 <% } %>
 
-<form action="/inv/add-inventory" method="POST" id="addInventoryForm">
-    <label for="classification_id">Classification:</label>
-    <%- dropdown %> <!-- Aquí se inserta la lista desplegable de clasificaciones -->
-
-    <label for="inv_make">Make:</label>
-    <input type="text" id="inv_make" name="inv_make" value="<%= inv_make %>" required>
-
-    <label for="inv_model">Model:</label>
-    <input type="text" id="inv_model" name="inv_model" value="<%= inv_model %>" required>
-
-    <label for="inv_year">Year:</label>
-    <input type="number" id="inv_year" name="inv_year" value="<%= inv_year %>" required>
-
-    <label for="inv_description">Description:</label>
-    <textarea id="inv_description" name="inv_description"><%= inv_description %></textarea>
-
-    <label for="inv_image">Image Path:</label>
-    <input type="text" id="inv_image" name="inv_image" value="/images/no-image.jpg" required>
-
-    <label for="inv_thumbnail">Thumbnail Path:</label>
-    <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="/images/no-thumbnail.jpg" required>
-
-    <label for="inv_price">Price:</label>
-    <input type="number" id="inv_price" name="inv_price" value="<%= inv_price %>" required>
-
-    <label for="inv_miles">Miles:</label>
-    <input type="number" id="inv_miles" name="inv_miles" value="<%= inv_miles %>" required>
-
-    <label for="inv_color">Color:</label>
-    <input type="text" id="inv_color" name="inv_color" value="<%= inv_color %>" required>
-
+<div class="add-inventory-container">
+    <form action="/inventory/add-inventory" method="POST">
+      <!-- Classification Dropdown -->
+      <label for="classification">Classification</label>
+      <%- dropdown %>
+  
+      <!-- Make Input -->
+      <label for="inv_make">Make:</label>
+      <input
+        type="text"
+        id="inv_make"
+        name="inv_make"
+        required
+        minlength="3"
+        placeholder="Min of 3 characters"
+        title="Make must be at least 3 characters long"
+      />
+  
+      <!-- Model Input -->
+      <label for="inv_model">Model:</label>
+      <input
+        type="text"
+        id="inv_model"
+        name="inv_model"
+        required
+        minlength="3"
+        placeholder="Min of 3 characters"
+        title="Model must be at least 3 characters long"
+      />
+  
+      <!-- Description Textarea -->
+      <label for="inv_description">Description:</label>
+      <textarea
+        id="inv_description"
+        name="inv_description"
+        required
+        placeholder="Enter the vehicle description here"
+      ></textarea>
+  
+      <!-- Image Path Input -->
+      <label for="inv_image">Image Path:</label>
+      <input
+        type="text"
+        id="inv_image"
+        name="inv_image"
+        required
+        placeholder="/images/vehicles/no-image.png"
+        title="Provide the image path"
+      />
+  
+      <!-- Thumbnail Path Input -->
+      <label for="inv_thumbnail">Thumbnail Path:</label>
+      <input
+        type="text"
+        id="inv_thumbnail"
+        name="inv_thumbnail"
+        required
+        placeholder="/images/vehicles/no-thumbnail.png"
+        title="Provide the thumbnail path"
+      />
+  
+      <!-- Price Input -->
+      <label for="inv_price">Price:</label>
+      <input
+        type="number"
+        id="inv_price"
+        name="inv_price"
+        required
+        min="0"
+        step="0.01"
+        placeholder="Enter price as a decimal or integer"
+        title="Price should be a valid number"
+      />
+  
+      <!-- Year Input -->
+      <label for="inv_year">Year:</label>
+      <input
+        type="number"
+        id="inv_year"
+        name="inv_year"
+        required
+        min="1900"
+        max="2099"
+        placeholder="4-digit year"
+        title="Year must be between 1900 and 2099"
+      />
+  
+      <!-- Miles Input -->
+      <label for="inv_miles">Miles:</label>
+      <input
+        type="number"
+        id="inv_miles"
+        name="inv_miles"
+        required
+        min="0"
+        placeholder="Enter miles driven"
+        title="Miles should be a positive number"
+      />
+  
+      <!-- Color Input -->
+      <label for="inv_color">Color:</label>
+      <input
+        type="text"
+        id="inv_color"
+        name="inv_color"
+        required
+        placeholder="Enter vehicle color"
+        title="Color should be a valid string"
+      />
     <button type="submit">Add Vehicle</button>
 </form>
+</div>

@@ -23,16 +23,3 @@
   />
   <button type="submit">Add Classification</button>
 </form>
-
-<script>
-  // Validación en cliente para evitar espacios o caracteres especiales
-  document.getElementById("classificationForm").addEventListener("submit", function(event) {
-    const classificationInput = document.getElementById("classification_name").value;
-    const validPattern = /^[a-zA-Z0-9]+$/;
-
-    if (!validPattern.test(classificationInput)) {
-      event.preventDefault();
-      alert("The classification name can only contain letters and numbers. No spaces or special characters.");
-    }
-  });
-</script>
