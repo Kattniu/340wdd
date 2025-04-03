@@ -19,7 +19,8 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 
 // Route to build vehicle detail view
 router.get("/detail/:inv_id", invController.buildItemDetailById);
-
+    /* Muestra detalles de un vehículo en particular*/ 
+    
 // Route to management view
 router.get("/", invController.buildMgmtView);
       /*Que hace esta ruta? Carga la vista de gestion del inventario, donde los administradores 
