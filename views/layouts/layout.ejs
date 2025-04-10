@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../layouts/partials/head.ejs') %>
-
+  <%- include('../partials/head.ejs') %>
   <body>
     <div id="wrapper">
-      <%- include('../layouts/partials/header') %> <%-
-      include('../layouts/partials/navigation')%>
-
-      <main><%- body %></main>
-
-      <%- include('../layouts/partials/footer') %>
+      <%- include('../partials/header.ejs') %> <%-
+      include('../partials/navigation.ejs')%>
+      <main>
+      <%- body %>
+      </main>
+      <%- include('../partials/footer.ejs') %>
     </div>
   </body>
 </html>

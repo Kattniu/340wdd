@@ -1,29 +1,92 @@
-<h1>Welcome to Your Account</h1>
 
-<%- messages() %>
-
-<div class="login-container">
-  <form id="loginForm" action="/account/login" method="post">
-    <div class="input-group">
-      <label for="account_email">Email Address</label>
-      <input type="email" name="account_email" placeholder="Enter your email" required />
+<div>
+    <div>
+        <h1><%-title-%></h1>
+        <%- messages() %>
     </div>
+    
+    <div>
+        <form id="loginForm" action="/account/login" method="post">
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+            <fieldset>
+                <div class="form_part">
+                    <label>
+                        <p>Email:</p>
+                        <input type="email" required id="email" name="account_email"
+                        value="<%= locals.account_email%>">
+                    </label>
+                </div>
+                <div class="form_part">
+                    <label>
+                        <p>Password</p>
+                        <input name="account_password" id="password" type="password" required
+                            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><br><span
+                            id="showPass">Show Password</span>
+                        <!-- <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital
+                            letter and 1 special character</span> -->
+                    </label>
+                </div>
+               <div>
+                    <button class="login_button">LOGIN</button>
+                    <p class="login_signup_message">No account? <a href="/account/register">Sign-up</a>
+                </div>
+            </fieldset>
+        </form>
 
-    <div class="input-group">
-      <label for="account_password">Password</label>
-      <input
-        type="password"
-        name="account_password"
-        placeholder="Enter your password"
-        required
-        aria-label="Password"
-      />
     </div>
-
-    <button type="submit" class="submit-btn">Log In</button>
-  </form>
-
-  <p class="sign-up-link">Don't have an account?.
-    <a href="/account/register"> Sign-up</a>
-  </p>
 </div>
+    
+    <!-- <div>
+        <div>
+           <h1><%-title-%></h1>
+            <%- messages() %> 
+        </div>
+        <div>
+            <form id="loginForm" action="/account/login" method="post">
+                <% if (errors) { %>
+                    <ul class="notice">
+                        <% errors.array().forEach(error=> { %>
+                            <li>
+                                <%= error.msg %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } %>
+    <fieldset>
+        <div class="form_part">
+        <label>
+            <p>Email:</p>
+            <input type="email" 
+            required id="email" 
+            name="account_email"
+            value="<%= locals.account_email%>">
+        </label>
+        </div>
+        <div class="form_part">
+            <label>
+                <p>Password</p>
+                <input name="account_password" 
+                id="password" 
+                type="password" 
+                required
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><br><span
+                id="showPass">Show Password</span>
+            </label>
+        </div>
+        <div>
+            <button class="login_button">Log In</button>
+            <p class="signup-link">Don't have an account? <a href="/account/register">Sign-up</a>
+        </div>
+    </fieldset>
+        
+        </form>
+        </div>
+    </div> -->

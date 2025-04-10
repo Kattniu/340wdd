@@ -1,0 +1,80 @@
+<div>
+    <div>
+      <h1><%- title %></h1>
+      <%- messages() %>
+    </div>
+  
+    <div>
+      <% if (errors) { %>
+        <ul class="notice">
+          <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+  
+      <form action="/account/admin" method="post" class="form-admin">
+        <table>
+          <thead>
+            <tr>
+              <% Object.keys(tableData[0]).forEach((column) => { %>
+                <th class="column-header" data-column="<%= column %>">
+                  <%= column.replace(/_/g, " ") %>
+                </th>
+              <% }) %>
+            </tr>
+          </thead>
+  
+          <tbody>
+            <% tableData.forEach((row, rowIndex) => { %>
+              <tr>
+                <% Object.keys(row).forEach((column) => { %>
+                  <td data-column="<%= column %>">
+  
+                    <!-- Field for account_id -->
+                    <% if (column === "account_id") { %>
+                      <input type="hidden" name="accounts[<%= rowIndex %>][<%= column %>]" value="<%= row[column] %>">
+                      <span><%= row[column] %></span>
+                    <% } else if (column === "account_type") { %>
+  
+                      <!-- Select for account_type -->
+                      <% let newOptions = options;
+                         if (row[column] !== 'Owner') {
+                           newOptions = options.filter(option => option.account_type !== 'Owner');
+                         } %>
+                         <label for="account_type_<%= rowIndex %>">Account Type</label>
+                         <select name="accounts[<%= rowIndex %>][<%= column %>]" id="account_type_<%= rowIndex %>">
+                           <% newOptions.forEach((accountType) => { %>
+                             <option value="<%= accountType.account_type %>"
+                               <% if (row[column] === accountType.account_type) { %> selected <% } %>
+                               <% if (row[column] === "Owner" && accountType.account_type !== "Owner") { %> disabled <% } %>
+                             >
+                               <%= accountType.account_type %>
+                             </option>
+                           <% }) %>
+                         </select>
+                    <% } else if (column == 'account_email') { %>
+  
+                      <!-- Input for account_email -->
+                      <label for="account_email_<%= rowIndex %>">Email</label>
+                      <input type="email" id="account_email_<%= rowIndex %>" name="accounts[<%= rowIndex %>][<%= column %>]" value="<%= row[column] %>"
+                        pattern="^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$" required>
+                    <% } else { %>
+  
+                      <!-- General text input for other fields -->
+                      <label for="<%= column %>_<%= rowIndex %>"><%= column.replace(/_/g, " ") %></label>
+                      <input type="text" id="<%= column %>_<%= rowIndex %>" name="accounts[<%= rowIndex %>][<%= column %>]" value="<%= row[column] %>" required>
+                    <% } %>
+  
+                  </td>
+                <% }) %>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        
+        <button type="submit">Update</button>
+      </form>
+    </div>
+  </div>
+  

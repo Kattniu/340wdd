@@ -1,596 +1,276 @@
-/******* Change Box Model ***************/
+:root {
+  --primary-color: #353637;
+  --secondary-color: #1987fb;
+  --white-color: #ffffff;
+  --rosa-color:rgb(235, 104, 178);
+  --black-color: #000000;
+  --yellow-color: #f6c700;
+  --red-color: #b92a2a;
+  --hero-description-bg-color: #ffffff44;
+  --background-image: url('/images/site/small_check.jpg');
+}
+* {
+  font-family: 'Arial', sans-serif;
+  border-radius: 5px;
+}
 *,
 *:before,
 *:after {
   box-sizing: border-box;
 }
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f3fbfb;
-  text-align: center;
-}
-
-/* header.ejs */
-#top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background-color:white;
-  font-size: 1.2rem;
-}
-#top-header a {
-  color:black;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-#top-header a:hover {
-  text-decoration: underline;
-}
-/*NAVIGATION.EJS*/
-nav {
-  background-color: black;
-  padding: 10px 0;
-}
-nav ul {
-  list-style: none;
   display: flex;
   justify-content: center;
-  padding: 0;
-  margin: 0;
+  background-image: var(--background-image);
 }
-
-nav ul li {
-  color: white;
-  padding: 10px 20px;
-  text-transform: uppercase;
-  font-weight: bold;
-  cursor: pointer;
+body > div {
+  border-radius: 5px;
+  padding: 1rem;
+  border:  5px solid var(--secondary-color);
+  width: 80vw;
+  background-color: var(--white-color);
 }
-
-nav ul li:hover {
-  background-color: gray;
-  transition: 0.3s;
-}
-/*INDEX.EJS*/
 h1 {
   font-size: 2rem;
   margin-top: 20px;
 }
 
-.container-delorean {
+/*HEADER.EJS*/
+#headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color:var(--black-color);
+  font-size: 2rem;
+}
+#headerTop a {
+  color: var(--white-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+#headerTop a:hover {
+  color: var(--yellow-color);
+  text-decoration: underline;
+  transition: 0.3s;
+}
+/*INDEX.ejs*/
+#index-hero {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px auto;
   max-width: 90%;
+  overflow: hidden;
 }
-.delorean-image {
+#hero-car {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#hero-car img {
   width: 100%;
   max-width: 800px;
   height: auto;
-
+  display: block;
 }
-/*INDEX.EJS: DMC texto sobre la imagen */
-.text-overlay {
+/* Contenedor Delorean encima de la imagen */
+#container-delorean {
   position: absolute;
   top: 30%;
-  left: 15%;
-  color: rgb(100, 172, 214);
-  text-align: left;
-  background: rgba(255, 255, 255, 0.7);
-  padding: 15px;
-  border-radius: 8px;
+  left: 10%;
+  background:  rgba(242, 241, 241, 0.75);
+  color: var(--secondary-color);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  max-width: 300px;
+  z-index: 2;
 }
-.text-overlay h2 {
+#container-delorean h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 }
-
-.text-overlay p {
+#container-delorean p{
   font-size: 1rem;
   margin: 5px 0;
 }
-#button-own img {
+#own-today-button {
   width: 150px;
-  margin-top: 10px;
+  margin-top: 5px;
+  cursor: pointer;
 }
-
-/* Contenedor principal */
-#main-container {
+#index-container {
+  margin: 0.1rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 1rem;
   flex-wrap: wrap;
-  margin: 20px auto;
-  max-width: 90%;
 }
-#reviews, #upgrades {
-  width: 45%;
-  background: #f4f4f4;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+/* Estilos generales para ambas secciones */
+.index-upgrades,
+.index-reviews {
+  flex: 1;
+  min-width: 300px;
+  margin: 20px;
 }
-
-#reviews h2, #upgrades h2 {
-  font-size: 1.5rem;
+/* Tarjetas de upgrades */
+.index-upgrade-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
-
-#reviews ul {
-  list-style: none;
-  padding: 0;
+.index-upgrade-card {
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  flex: 1 1 45%;
+  box-shadow: 0 2px 5px rgba(128, 133, 137, 0.1);
 }
-
-#reviews li {
+.index-upgrade-card img {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+.index-upgrade-card a {
+  padding: 10px;
+  display: block;
+  font-weight: bold;
+  color: #333;
+  text-decoration: none;
+  margin-top: 0.5rem;
+}
+.index-upgrade-card a:hover {
+  color: var(--rosa-color);
+  text-decoration: underline;
+  transition: 0.3s;
+}
+/* Reviews */
+.index-reviews ul {
+  padding-left: 1rem;
+  list-style-type: disc;
+}
+.index-reviews li {
   font-size: 1rem;
   padding: 5px 0;
 }
-
-.container-upgrades {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-.upgrade {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.upgrade img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.upgrade a {
-  margin-top: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  color: #000;
-}
-
-.upgrade a:hover {
-  color: #0077cc;
-}
-
-/*footer.ejs*/
-footer {
-  background-color: #000;
-  color: white;
-  padding: 15px;
+h3 {
   text-align: center;
+  font-size: 1.7rem; /* Más grande para destacarse */
+  color: var(--black-color); /* Un amarillo fuerte por defecto */
+  margin: 2rem 0 1rem;
+  font-family: 'Orbitron', sans-serif; /* Fuente futurista (opcional si la tienes) */
+  letter-spacing: 1px;
+  border-bottom: 2px solid var(--yellow-color, #FFD700); /* Línea decorativa */
+  padding-bottom: 0.5rem;
 }
-
+/******************************************************************/
 @media (max-width: 768px) {
-  #top-header {
+#redbutton {
+    width: 100%;
+    max-width: 250px;
+}
+body > div {
+    border: 5px solid var(--yellow-color);
+    border-radius: 5px;
+    padding: 1rem;
+    width: 94vw;
+    background-color: var(--white-color);
+  }
+nav li a {
+    font-size: 0.8rem;
+}
+#headerTop{
+  font-size: 1.5rem;
+}
+#hero-car img {
+    max-width: 100%;
+    height: auto;
+}
+#container-delorean {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  margin-top: 1rem;
+  text-align: center;
+  max-width: 90%;
+  transform: none;
+}
+
+#index-hero {
     flex-direction: column;
-    text-align: center;
+    width: 100%;
+    padding: 1rem;
   }
-
-  #main-container {
+.index-upgrade-container {
     flex-direction: column;
-    align-items: center;
   }
 
-  #reviews, #upgrades {
-    width: 90%;
-    margin-bottom: 20px;
-  }
-
-  .container-upgrades {
-    grid-template-columns: repeat(1, 1fr);
-  }
-  .text-overlay {
-    position: absolute;
-    top: 0;
-    left: 10%;
-    width: 50%;
-    text-align: center;
+  .index-upgrade-card {
+    flex: 1 1 100%;
   }
 }
-/* Estilo general para la vista de detalles */
-.vehicle-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+/*********************************************************************************/
+/*FOOTER.EJS*/
+footer {
+  background-color:var(--black-color); 
+  color: var(--white-color);            
+  text-align: center;
+  padding: 1rem 0.1rem;
+  margin-top:2rem;
 }
-
-.vehicle-detail img {
-  max-width: 100%;  /* Hace que la imagen ocupe todo el ancho disponible */
-  height: auto;     /* Mantiene la proporción de la imagen */
-}
-
-@media (min-width: 768px) {
-  .vehicle-detail {
-      flex-direction: row;  /* En pantallas grandes, la imagen y los detalles estarán lado a lado */
-  }
-  .vehicle-detail img {
-      width: 50%;  /* La imagen ocupa la mitad del ancho en pantallas grandes */
-  }
-}
-
-@media (max-width: 767px) {
-  .vehicle-detail {
-      flex-direction: column;  /* En pantallas pequeñas, los detalles y la imagen se apilan */
-  }
-}
-
-/*LOGIN.EJS*/
-/* Estilo para el formulario de inicio de sesión */
-.login-container {
-  background-color: #cbcdeb;
-  border-radius: 10px;
-  padding: 25px;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  margin-bottom: 30px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-}
-.input-group {
-  margin-bottom: 20px;
-}
-.input-group label {
-  display: block;
+footer .copyright {
+  margin-bottom: 1rem;
   font-size: 1rem;
-  color: #666;
-  margin-bottom: 5px;
 }
-.input-group input {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 2px solid #e8e2e8;
-  border-radius: 4px;
-  margin-top: 5px;
-}
-.input-group input:focus {
-  border-color: #4A90E2;
-  outline: none;
-}
-.submit-btn {
-  background-color: #cd95e2;
-  color: white;
+
+#redbutton {
+  background-color:var(--red-color);
+  color: var(--white-color);
   border: none;
-  padding: 14px;
-  font-size: 1.2rem;
-  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.submit-btn:hover {
-  background-color: #92bce6;
-  color: blueviolet;
+#redbutton:hover {
+  background-color: var(--yellow-color);
+  color: var(--primary-color);
 }
-.sign-up-link {
-  text-align: center;
-  margin-top: 20px;
+
+/*NAVIGATION.EJS*/
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin:10px 0;
+  color: var(--white-color);
+  background-color: var(--primary-color);
 }
-.sign-up-link a {
+nav ul{
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  align-items: center;
   text-decoration: none;
-  color: #4A90E2;
-  font-size: 1rem;
 }
-
-.sign-up-link a:hover {
-  text-decoration: underline;
-}
-
-/*REGISTER.EJS*/
-/*registro para nuevo account*/
-/* Estilo del contenedor principal */
-.registration-form {
-  background-color: #e1eff6;
-  border-radius: 10px;
-  padding: 25px;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  margin-bottom: 30px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-}
-/* Título del formulario */
-h1 {
+nav ul li {
+  width: 100px;
   text-align: center;
-  font-size: 2rem;
-  color: #6bb4b6;
-  margin-bottom: 20px;
-}
-/* Estilos para el área de los errores */
-.error-box {
-  background-color: #f8d7da;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-}
-.error-list {
-  margin: 0;
-  padding-left: 20px;
-  list-style-type: square;
-  color: #721c24;
-}
-/* Estilo para cada grupo de entrada */
-.form-group {
-  margin-bottom: 20px;
-}
-.form-group label {
-  display: block;
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 8px;
-}
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-.form-group input:focus {
-  outline: none;
-  border-color: #007bff;
-}
-/* Pautas de contraseña */
-.password-warning {
-  font-size: 0.9rem;
-  color: #6c757d;
-  margin-top: 5px;
-}
-/* Estilo del botón de registro */
-.register-btn {
-  background-color: #d15ccb;
-  color: white;
-  padding: 14px;
-  border: none;
-  font-size: 1.1rem;
-  border-radius: 5px;
   cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease;
+  font-size: 1.2rem;
+  color: var(--white-color);
 }
-.register-btn:hover {
-  background-color: #54bcd1;
+nav a {
+  text-decoration: none;
+  color: var(--white-color);
 }
-
-/* MANAGEMENT.EJS****************************************************/
-/* Estilo general para la lista */
-.inventory-options {
- text-align: center; /* Centra el texto de la lista */
- justify-content: center; /* Centra los elementos dentro de la lista */
-  margin-top: 20px; /* Espacio superior */
-  max-width: 800px; /* Ancho máximo de la lista */
- margin: 20px auto; /* Centra la lista en la página */
-  list-style-type: none; /* Elimina los puntos de la lista */
-  padding: 0; /* Elimina el padding predeterminado */
-  display: flex; /* Usa flexbox para alinear los elementos */
-  gap: 20px; /* Espacio entre los enlaces */
-  font-family: Arial, sans-serif; /* Fuente moderna y limpia */
-}
-
-/* Estilo para los enlaces */
-.inventory-options a {
-  text-decoration: none; /* Elimina el subrayado por defecto */
-  color:white; /* Color azul para los enlaces */
-  padding: 10px 15px; /* Espaciado interno para los enlaces */
-  border-radius: 4px; /* Bordes redondeados */
-  background-color: #e77bd5; /* Fondo claro para los enlaces */
-  display: inline-block; /* Hace que los enlaces se comporten como botones */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  font-size: 20px;
-}
-/* Efecto al pasar el cursor sobre el enlace */
-.inventory-options a:hover {
-  background-color: #0056b3; /* Fondo azul oscuro al pasar el cursor */
-  color: white; /* Cambia el color del texto a blanco */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
-}
-
-/* Efecto al pasar el cursor sobre los elementos de la lista */
-.inventory-options li:hover {
-  transform: scale(1.05); /* Le da un pequeño zoom a los elementos */
-}
-
-/* Efecto de enfoque en los enlaces */
-.inventory-options a:focus {
-  outline: none; /* Elimina el borde de enfoque predeterminado */
-  box-shadow: 0 0 0 2px #0056b3; /* Agrega un borde de enfoque personalizado */
-}
-
-/****** add-inventory.ejs *********************************************/
-
-.add-inventory-container{
-  font-family: 'Arial', sans-serif;
-  color: #333;
-}
-
-/* Estilo para los mensajes flash de éxito y error */
-.msg-success, .msg-error {
-  padding: 10px;
-  margin: 20px auto;
-  width: 80%;
-  max-width: 600px;
-  border-radius: 5px;
-  text-align: center;
-  font-size: 16px;
-}
-
-.msg-success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.msg-error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-/* Contenedor principal del formulario */
-.add-inventory-container {
-  width: 80%;
-  max-width: 600px;
-  margin: 30px auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo para el formulario */
-.add-inventory-container  form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Estilo para las etiquetas del formulario */
-.add-inventory-container  label {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #555;
-}
-
-/* Estilo para los campos de entrada */
-.add-inventory-container  input, textarea, select {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.add-inventory-container  input[type="number"], input[type="text"], textarea {
-  margin-bottom: 10px;
-}
-
-/* Estilo para el botón de envío */
-.add-inventory-container  button {
-  background-color: #007bff;
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.add-inventory-container  button:hover {
-  background-color: #0056b3;
-}
-
-/* Estilo para los campos de texto, el área de texto y los selectores */
-.add-inventory-container  textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.add-inventory-container  select {
-  padding: 12px;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
-/* Estilo para los mensajes de validación */
-.add-inventory-container  input:invalid {
-  border-color: #e74c3c;
-}
-
-.add-inventory-container  input:valid {
-  border-color: #5eda31;
-}
-
-
-/*ADD-CLASSIFICATION*************************/
-
-/* Mensajes de éxito y error */
-.msg-success, .msg-error {
-  padding: 12px;
-  margin: 20px auto;
-  width: 80%;
-  max-width: 500px;
-  border-radius: 5px;
-  text-align: center;
-  font-size: 16px;
-}
-.msg-success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.msg-error {
-  background-color: #f5d1d4;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-/* Contenedor del formulario */
-.classification-form form {
-  width: 80%;
-  max-width: 500px;
-  margin: 30px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Etiquetas */
-.classification-form label {
-  font-size: 14px;
-  font-weight: bold;
-  color: #555;
-}
-
-/* Campos de entrada */
-.classification-form input {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Efectos de validación */
-.classification-form input:invalid {
-  border-color: #e73ce7;
-}
-
-.classification-form input:valid {
-  border-color: #2ecc71;
-}
-
-/* Botón */
-.classification-form button {
-  background-color: #b300ff;
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.classification-form button:hover {
-  background-color: #0056b3;
+nav ul a:hover {
+  color: var(--rosa-color);
 }

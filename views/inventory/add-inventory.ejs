@@ -1,122 +1,96 @@
-<h1><%- title %></h1>
-
-<!-- Mostrar mensajes flash de éxito y error -->
-<% if (flashMessages.success) { %>
-    <div class="msg-success"><%= flashMessages.success %></div>
-<% } %>
-<% if (flashMessages.error) { %>
-    <div class="msg-error"><%= flashMessages.error %></div>
-<% } %>
-
-<div class="add-inventory-container">
-    <form action="/inventory/add-inventory" method="POST">
-      <!-- Classification Dropdown -->
-      <label for="classification">Classification</label>
-      <%- dropdown %>
-  
-      <!-- Make Input -->
-      <label for="inv_make">Make:</label>
-      <input
-        type="text"
-        id="inv_make"
-        name="inv_make"
-        required
-        minlength="3"
-        placeholder="Min of 3 characters"
-        title="Make must be at least 3 characters long"
-      />
-  
-      <!-- Model Input -->
-      <label for="inv_model">Model:</label>
-      <input
-        type="text"
-        id="inv_model"
-        name="inv_model"
-        required
-        minlength="3"
-        placeholder="Min of 3 characters"
-        title="Model must be at least 3 characters long"
-      />
-  
-      <!-- Description Textarea -->
-      <label for="inv_description">Description:</label>
-      <textarea
-        id="inv_description"
-        name="inv_description"
-        required
-        placeholder="Enter the vehicle description here"
-      ></textarea>
-  
-      <!-- Image Path Input -->
-      <label for="inv_image">Image Path:</label>
-      <input
-        type="text"
-        id="inv_image"
-        name="inv_image"
-        required
-        placeholder="/images/vehicles/no-image.png"
-        title="Provide the image path"
-      />
-  
-      <!-- Thumbnail Path Input -->
-      <label for="inv_thumbnail">Thumbnail Path:</label>
-      <input
-        type="text"
-        id="inv_thumbnail"
-        name="inv_thumbnail"
-        required
-        placeholder="/images/vehicles/no-thumbnail.png"
-        title="Provide the thumbnail path"
-      />
-  
-      <!-- Price Input -->
-      <label for="inv_price">Price:</label>
-      <input
-        type="number"
-        id="inv_price"
-        name="inv_price"
-        required
-        min="0"
-        step="0.01"
-        placeholder="Enter price as a decimal or integer"
-        title="Price should be a valid number"
-      />
-  
-      <!-- Year Input -->
-      <label for="inv_year">Year:</label>
-      <input
-        type="number"
-        id="inv_year"
-        name="inv_year"
-        required
-        min="1900"
-        max="2099"
-        placeholder="4-digit year"
-        title="Year must be between 1900 and 2099"
-      />
-  
-      <!-- Miles Input -->
-      <label for="inv_miles">Miles:</label>
-      <input
-        type="number"
-        id="inv_miles"
-        name="inv_miles"
-        required
-        min="0"
-        placeholder="Enter miles driven"
-        title="Miles should be a positive number"
-      />
-  
-      <!-- Color Input -->
-      <label for="inv_color">Color:</label>
-      <input
-        type="text"
-        id="inv_color"
-        name="inv_color"
-        required
-        placeholder="Enter vehicle color"
-        title="Color should be a valid string"
-      />
-    <button type="submit">Add Vehicle 🚗</button>
-</form>
+<!-- add vehicle class view -->
+<div>
+  <% if (title) { %>
+      <h1>
+          <%= title %>
+      </h1>
+      <%- messages() %>
+          <% } else { res.redirect('/') } %>
 </div>
+<% if (errors) { %>
+  <ul class="notice">
+      <% errors.array().forEach(error=> { %>
+          <li>
+              <%= error.msg %>
+          </li>
+          <% }) %>
+  </ul>
+  <% } %>
+
+      <form action="/inv/addInv" method="post" id="add_inv">
+          <fieldset>
+              <h2>All fields are required</h2>
+              <div class="form_part">
+                  <label>
+                      <span class="form_direct"><p>Classification</p></span>
+                      <select name="classification_id" id="className" value="<%= locals.classification_id %>" required>
+                          <option value="">Choose a Classification</option>
+                          <%- classDrop %>
+                      </select>
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Make</p>
+                      <input type="text" name="inv_make" id="invMake" required placeholder="Min of 3 characters" pattern="^.{3,}$"
+                          value="<%= locals.inv_make %>">
+                      <!-- <input name="account_firstname" type="text" > -->
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Model</p>
+                      <input type="text" name="inv_model"  id="invModel" required placeholder="Min of 3 characters" pattern="^.{3,}$"
+                          value="<%= locals.inv_model %>" >
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Year</p>
+                      <input name="inv_year" type="number" required
+                          id="invYear" value="<%= locals.inv_year %>" placeholder="4-digit year" pattern="^/d{4}$">
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Description</p>
+                      <input name="inv_description" id="invDescription" type="text" multiple value="<%= locals.inv_description %>" required>
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Image Path</p>
+                      <!-- serverside should validate special character exclusion -->
+                      <input name="inv_image" id="invImage" type="text" required value="/images/vehicles/no-image.png" pattern="^\/images\/vehicles\/[a-zA-Z0-9_-]+\.(jpg|jpeg|png)$">
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Thumbnail Path</p>
+                      <!-- serverside should validate special character exclusion -->
+                      <input name="inv_thumbnail" id="invThumbnail" type="text" required value="/images/vehicles/no-image.png" pattern="^\/images\/vehicles\/[a-zA-Z0-9_-]+\.(jpg|jpeg|png)$">
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Price</p>
+                      <input name="inv_price" id="invPrice" type="number" step="0.01" value="<%= locals.inv_price %>" required placeholder="Decimal or integer" pattern="^\d+(\.\d{1,2})?$">
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Miles</p>
+                      <input name="inv_miles" id="invMiles" type="number" required placeholder="Numbers only" value="<%= locals.inv_miles %>" pattern="^/d{1,}$">
+                  </label>
+              </div>
+              <div class="form_part">
+                  <label>
+                      <p>Color</p>
+                      <input name="inv_color" id="invColor" type="text" value="<%= locals.inv_color %>" required pattern="^\w{1,}$">
+                  </label>
+              </div>
+
+              <button>Add Vehicle</button>
+          </fieldset>
+
+      </form>

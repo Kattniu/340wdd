@@ -1,0 +1,23 @@
+<!-- management view -->
+<% if (title) { %>
+  <h1>
+      <%= title %>
+  </h1>
+  <%- messages() %>
+      <ul class="inventory-options">
+      <li><a href="/inv/add-classification"> ➕ Add New Classification</a></li>
+      <li><a href="/inv/add-inventory">Add New Vehicle 🚗</a></li>
+      </ul>
+      <h2>Manage Inventory</h2>
+      <p>Select a classification from the list to view classification's items</p>
+      <select id="classificationList">
+      <%- classDrop %>
+  </select>
+      <table id="inventoryDisplay"></table>
+      <noscript>JavaScript must be enabled to use this page.</noscript>
+      <script src="../../js/inventory.js"></script>
+
+      <% } else { res.redirect('/') } %>
+
+
+
