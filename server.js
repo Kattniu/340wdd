@@ -1,34 +1,38 @@
-
 /* ******************************************
- * This server.js file is the primary file of the 
- * application. It is used to control the project.
+ * server.js - Archivo principal de la aplicación.
+ * Controla toda la configuración del servidor.
  *******************************************/
-/* ***********************
- * Require Statements
- *************************/
-require("dotenv").config();
-// console.log("DATABASE_URL:", process.env.DATABASE_URL); // Check if URL is loading
-const express = require("express")
-const expressLayouts = require("express-ejs-layouts")
 
-const app = express()
-const session = require("express-session")
-const pool = require('./database/')
-const bodyParser = require("body-parser")
-const cookieParser = require("cookie-parser")
+/* ===============================
+ * 1. REQUERIMIENTOS (DEPENDENCIAS)
+ * =============================== */
+require("dotenv").config(); // Cargar variables de entorno
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 
+// Base de datos y utilidades personalizadas
+const pool = require("./database/");
+const static = require("./routes/static");
+const catchErrorsRoute = require("./routes/errorRoute.js");
+const baseController = require("./controllers/baseController");
+const utilities = require("./utilities/index.js");
 
-const static = require("./routes/static")
+// Mostrar en consola que se cargó la URL de la BD
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
-const catchErrorsRoute = require("./routes/errorRoute.js")
-const baseController = require("./controllers/baseController")
-const utilities = require("./utilities/index.js")
+/* ===============================
+ * 2. CONFIGURACIÓN DE LA APP
+ * =============================== */
+const app = express();
 
+/* ===============================
+ * 3. MIDDLEWARES GENERALES
+ * =============================== */
 
-console.log("DATABASE_URL:", process.env.DATABASE_URL); // Check if URL is loading
-/* ***********************
- * Middleware
- * ************************/
+// Configuración de sesiones con PostgreSQL
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -38,74 +42,72 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
-}))
+}));
 
-// Express Messages Middleware
-app.use(require('connect-flash')())
+// Middleware de mensajes flash (para notificaciones)
+app.use(require('connect-flash')());
 app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-})
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
 
+// Parseo del cuerpo de las solicitudes
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(bodyParser.json())
-
-app.use(bodyParser.urlencoded({extended: true}))// for parsing application/x-www-form-urlencoded
-
+// Mostrar en consola cada request que llega
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
   next();
 });
 
-app.use(cookieParser())
+// Habilita el uso de cookies
+app.use(cookieParser());
 
-app.use(utilities.checkJWTToken)
+// Verifica si el usuario tiene token JWT válido
+app.use(utilities.checkJWTToken);
 
+/* ===============================
+ * 4. CONFIGURACIÓN DE VISTAS
+ * =============================== */
 
+// Motor de plantillas EJS + uso de layouts
+app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set("layout", "./layouts/layout"); // Ruta del layout principal
 
-/* ***********************
- * View Engine and Templates
- *************************/
+/* ===============================
+ * 5. DEFINICIÓN DE RUTAS
+ * =============================== */
 
-app.set("view engine", "ejs")
-app.use(expressLayouts)
-app.set("layout", "./layouts/layout") // not at views root - sets layout filespace
+// Rutas de archivos estáticos
+app.use(static);
 
-/* ***********************
- * Routes
- *************************/
+// Ruta principal (Home)
+app.get("/", utilities.handleErrors(baseController.buildHome));
 
-app.use(static)
-// app.use((req,res,next) => {console.log("incoming route url: ", req.url)})
+// Rutas del inventario
+app.use("/inv", require("./routes/inventoryRoute.js"));
 
-app.get("/", utilities.handleErrors(baseController.buildHome))
+// Rutas relacionadas a usuarios / cuentas
+app.use("/account", require("./routes/accountRoute.js"));
 
-app.use("/inv", require("./routes/inventoryRoute.js"))
+/* ===============================
+ * 6. MANEJO DE ERRORES (FINAL)
+ * =============================== */
 
-app.use("/account", require("./routes/accountRoute.js"))
-
-// app.get("/", utilities.handleErrors((req,res) => 
-//   {res.render("index", {title: "Home"})}
-// ))
-
-/* ****************************************
- * Middleware For Handling Errors
- * Do not place anything after this.
- * wrap utilities.handleErrors for General Error Handling
- **************************************** */
+// Middleware para errores generales (debe ir al final siempre)
 app.use(catchErrorsRoute);
 
-/* ***********************
- * Local Server Information
- * Values from .env (environment) file
- *************************/
-const port = process.env.PORT
-const host = process.env.HOST
+/* ===============================
+ * 7. CONFIGURACIÓN DEL SERVIDOR
+ * =============================== */
 
+// Valores desde .env
+const port = process.env.PORT;
+const host = process.env.HOST;
 
-/* ***********************
- * Log statement to confirm server operation
- *************************/
+// Iniciar el servidor
 app.listen(port, () => {
-  console.log(`app listening on ${host}:${port}`)
-})
+  console.log(`app listening on ${host}:${port}🚀`);
+});

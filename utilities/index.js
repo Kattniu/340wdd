@@ -5,11 +5,11 @@ const Util = {};
 
 /* ************************
  * Constructs the nav HTML unordered list
+ * - Gets all classifications from DB
+ * - Builds a <ul> navigation list with links to each classification
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications();
-
-  // console.log(data)
   let list = "<ul>";
   list += '<li><a href="/" title="Home page">Home</a></li>';
   data.rows.forEach((row) => {
@@ -28,14 +28,13 @@ Util.getNav = async function (req, res, next) {
   return list;
 };
 
-
 /* **************************************
- * Constructs the classDrop HTML select dropdown menu
- * ************************************ */
+ * Builds a <select> dropdown of classifications
+ * - Selects the current classification if passed
+ ************************************ */
 Util.buildClassificationDropdown = async function (classification_id) {
   let selectedOption = classification_id;
   let data = await invModel.getClassifications();
-  console.log("buildClassificationDropdown data", data);
   let classDropOptions = "";
   data.rows.forEach((row) => {
     if (row.classification_id == selectedOption) {
@@ -44,13 +43,13 @@ Util.buildClassificationDropdown = async function (classification_id) {
       classDropOptions += `<option value="${row.classification_id}">${row.classification_name}</option>`;
     }
   });
-  console.log("classDrop", classDropOptions);
   return classDropOptions;
 };
 
 /* **************************************
- * Build the classification view HTML
- * ************************************ */
+ * Builds the vehicle list grid for a classification
+ * - Displays thumbnail, make, model, price, miles
+ ************************************ */
 Util.buildClassificationGrid = async function (data) {
   let grid;
   if (data.length > 0) {
@@ -80,24 +79,6 @@ Util.buildClassificationGrid = async function (data) {
         </div>
         </div>
         </li>`;
-
-      // grid += '<li>'
-      // grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id
-      // + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model
-      // + 'details"><img src="' + vehicle.inv_thumbnail
-      // +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model
-      // +' on CSE Motors" /></a>'
-      // grid += '<div class="namePrice">'
-      // grid += '<h2>'
-      // grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View '
-      // + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
-      // + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
-      // grid += '</h2>'
-      // grid += '<span>$'
-      // + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
-      // grid += '</div>'
-      // grid += '<hr />'
-      // grid += '</li>'
     });
     grid += "</ul>";
   } else {
@@ -107,19 +88,17 @@ Util.buildClassificationGrid = async function (data) {
 };
 
 /* **************************************
- * Build the inventory view HTML
- * ************************************ */
-
+ * Builds the inventory grid for a single vehicle
+ * - Displays full details of the vehicle
+ ************************************ */
 Util.buildInventoryGrid = async function (data) {
   let grid;
-  console.log("data length", data.length);
   let vehicle = data[0];
   switch (data.length) {
     case 0:
       grid = `<p>Sorry, we can't find any matching vehicles could be found.</p>`;
       break;
     case 1:
-      // grid = '<div><h1>' + vehicle.inv_model + ' ' + vehicle.inv_make + '</h1><div class="inv__details">'+ vehicle.inv_model + ' ' + vehicle.inv_make + '</div></div>'
       grid = `
             <div id="inv_page__detail">
               <div class="inv__image">
@@ -145,9 +124,8 @@ Util.buildInventoryGrid = async function (data) {
 };
 
 /* ****************************************
- * Middleware For Handling Errors
- * Wrap other function in this for
- * General Error Handling
+ * Error Handling Middleware
+ * - Wraps async functions to catch errors
  **************************************** */
 Util.handleErrors = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch((err) => {
@@ -156,7 +134,9 @@ Util.handleErrors = (fn) => (req, res, next) =>
   });
 
 /* ****************************************
- * Middleware to check token validity
+ * Middleware to check for valid JWT
+ * - Verifies token
+ * - If valid, sets user data in res.locals
  **************************************** */
 Util.checkJWTToken = (req, res, next) => {
   if (req.cookies.jwt) {
@@ -182,8 +162,9 @@ Util.checkJWTToken = (req, res, next) => {
 };
 
 /* ****************************************
- *  Fail account authorization
- * ************************************ */
+ * Forces logout and redirect to login
+ * - Used if authorization fails
+ **************************************** */
 Util.accountFail = (req, res, next) => {
   req.flash("notice", "Please log in.");
   res.clearCookie("jwt");
@@ -193,9 +174,9 @@ Util.accountFail = (req, res, next) => {
 };
 
 /* ****************************************
- *  check Account Type for permissions
- * if account type !admin and !employee, redirect + error to login page
- * ************************************ */
+ * Middleware to check user type
+ * - Only allows Admin, Employee or Client types
+ **************************************** */
 Util.accountTypeCheck = (req, res, next) => {
   try {
     if (
@@ -220,18 +201,15 @@ Util.accountTypeCheck = (req, res, next) => {
 };
 
 /* ****************************************
- *  Check Login
- * ************************************ */
+ * Checks if user is logged in (JWT valid)
+ **************************************** */
 Util.checkLogin = (req, res, next) => {
-  // console.log("Checking login");
   try {
     const decoded = jwt.verify(
       req.cookies.jwt,
       process.env.ACCESS_TOKEN_SECRET
     );
     if (res.locals.loggedin && req.cookies.jwt && decoded) {
-      console.log("Token passed");
-      console.log("Checking decoded Token:", decoded);
       res.locals.user = decoded;
       next();
     } else {
@@ -243,14 +221,15 @@ Util.checkLogin = (req, res, next) => {
 };
 
 /* ****************************************
- *  Check Ownership
- * ************************************ */
+ * Checks if user is "Owner" type
+ * - Used to restrict resources to owners only
+ **************************************** */
 Util.checkOwnership = (req, res, next) => {
   try {
     if (
       res.locals.loggedin &&
       req.cookies.jwt &&
-        res.locals.user.account_type !== "Owner"
+      res.locals.user.account_type !== "Owner"
     ) {
       req.flash(
         "notice",
@@ -264,10 +243,11 @@ Util.checkOwnership = (req, res, next) => {
   }
 };
 
+/* ****************************************
+ * Sorts users by account_id in ascending order
+ **************************************** */
 Util.sortUsersById = async function (data){
-  // console.log("Data to be sorted: ", data);
   sortedData = await data.sort((a, b) => a.account_id - b.account_id);
-  // console.log("Sorted Data: ", sortedData);
   return sortedData;
 }
 
