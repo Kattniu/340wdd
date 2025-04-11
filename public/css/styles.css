@@ -637,3 +637,24 @@ noscript {
   margin:2rem ;
 
 }
+/*ACCOUNT.EJS*/
+.account-container {
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  text-align: center;
+}
+.account-container a {
+  text-decoration: none; 
+  background-color:var(--secondary-color); 
+  color: var(--white-color); 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  font-size: 1.1em; 
+  transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+.account-container a:hover {
+  background-color: var(--azul-celeste-color); 
+  transform: scale(1.05); 
+
+}

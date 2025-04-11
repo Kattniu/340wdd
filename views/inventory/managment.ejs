@@ -10,12 +10,12 @@
       <li><a href="/inv/addInv">Add New Vehicle 🚗</a></li>
       </ul>
       <h2>Manage Inventory</h2>
-      <p>📑Select a classification from the list to view classification's items 🖱️</p>
+      <p>📑Select a classification from the dropdown menu to view its items🖱️</p>
       <select id="classificationList">
       <%- classDrop %>
   </select>
       <table id="inventoryDisplay"></table>
-      <noscript>JavaScript must be enabled to use this page.</noscript>
+      <noscript>JavaScript is required to fully interact with this page. Please enable it in your browser settings.</noscript>
       <script src="../../js/inventory.js"></script>
 
       <% } else { res.redirect('/') } %>
