@@ -10,7 +10,6 @@ const validate = {}
 
 validate.addClassRules = () => {
     return [
-        // class_name is required and must have no leading or trailing spaces and no special characters of any kind
     body("classification_name")
     .trim()
     .escape()
@@ -26,7 +25,6 @@ validate.addClassRules = () => {
 })
     ]
 }
-
 validate.addInvRules = () => {
 console.log("in addInvRules")
     return [

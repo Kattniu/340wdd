@@ -6,11 +6,17 @@
   --rosa-color:rgb(235, 104, 178);
   --black-color: #000000;
   --yellow-color: #f6c700;
+  --gris-color: #ada7a7dc;
   --red-color: #b92a2a;
+  --negro-color: #1e1f21;
+  --azul-celeste-color: #4fc3f7; 
+  --verdeagua-color: #00bfa5; 
+  --orange-color: #eea250; 
+  --green-color: #4caf50; 
   --background-image: url('/images/site/small_check.jpg');
 }
 * {
-  font-family: 'Arial', sans-serif;
+  font-family:'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   border-radius: 5px;
 }
 *,
@@ -31,10 +37,10 @@ body > div {
   background-color: var(--white-color);
 }
 h1 {
+  text-align: center;
   font-size: 2rem;
   margin-top: 20px;
 }
-
 /*HEADER.EJS*/
 #headerTop {
   display: flex;
@@ -166,6 +172,22 @@ h3 {
   border-bottom: 2px solid var(--yellow-color, #FFD700); /* Línea decorativa */
   padding-bottom: 0.5rem;
 }
+button {
+  margin:10px;
+  padding: 12px;
+  background-color:var(--verdeagua-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color:var(--celeste-color);
+}
+
 /******************************************************************/
 @media (max-width: 768px) {
 #redbutton {
@@ -174,10 +196,8 @@ h3 {
 }
 body > div {
     border: 5px solid var(--yellow-color);
-    border-radius: 5px;
     padding: 1rem;
     width: 94vw;
-    background-color: var(--white-color);
   }
 nav li a {
     font-size: 0.8rem;
@@ -208,10 +228,40 @@ nav li a {
     flex-direction: column;
   }
 
-  .index-upgrade-card {
+.index-upgrade-card {
     flex: 1 1 100%;
   }
+.inv-options {
+    flex-direction: column;
+    align-items: center;
+  }
+
+#inventoryDisplay th, #inventoryDisplay td {
+    padding: 0.5rem;
+  }
 }
+@media screen and (max-width: 600px) {
+  .login_container {
+    padding: 1rem;
+  }
+
+  .login_button {
+    width: 100%;
+  }
+  .registration_container {
+    padding: 1rem;
+  }
+
+  .registration_card {
+    padding: 1rem;
+  }
+
+  .register_button {
+    width: 100%;
+  }
+  
+}
+
 /*********************************************************************************/
 /*FOOTER.EJS*/
 footer {
@@ -296,28 +346,24 @@ nav ul a:hover {
   flex-direction: column;
   gap: 1rem;
 }
-
 .login_form_part p {
-  margin: 0 0 0.3rem;
+  margin: 10px;
   font-weight: bold;
 }
-
 .login_form_part input {
   width: 100%;
   padding: 0.7rem;
   border: 1px solid var(--rosa-color);
+  background-color: var(--primary-color);
   border-radius: 0.5rem;
-  background-color: var(--hero-description-bg-color);
   color: var(--black-color);
   font-size: 1rem;
 }
-#showPass {
-  display: block;
-  margin-top: 0.3rem;
-  font-size: 0.9rem;
-  color: var(--celeste-color);
-  margin: 5px 0;
-  cursor: pointer;
+.login_form_part input:focus {
+  outline: none;
+  color: var(--white-color);
+  border-color: var(--celeste-color);
+  box-shadow: 0 0 3px var(--celeste-color);
 }
 .login_button {
   background-color: var(--secondary-color);
@@ -336,7 +382,6 @@ nav ul a:hover {
   margin-top: 1rem;
   font-size: 0.95rem;
 }
-
 .login_signup_message a {
   color: var(--celeste-color);
   text-decoration: none;
@@ -345,17 +390,250 @@ nav ul a:hover {
 .notice {
   list-style: none;
   padding: 0.5rem 1rem;
-  background-color: var(--red-color);
+  background-color: var(--verdeagua-color);
   border-radius: 0.5rem;
   font-weight: 500;
 }
+/*REGISTER.EJS*/
+.registration_container {
+  background-color: var(--primary-color);
+  max-width: 700px;
+  margin: 3rem auto;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.registration_header h1 {
+  text-align: center;
+  color: var(--orange-color);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+.registration_card {
+  padding: 2rem;
+}
+form#account_registration {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.form_part p {
+  color: var(--white-color);
+  margin: 10px;
+  font-weight: bold;
+}
+.form_part input {
+  width: 100%;
+  cursor: pointer;
+  padding: 0.75rem;
+  border: 1px solid var(--gris-color);
+  border-radius: 0.5rem;
+  background-color: var(--primary-color);
+  color: var(--gris-color);
+  font-size: 1rem;
+}
+.form_part input:focus {
+  outline: none;
+  color: var(--white-color);
+  border-color: var(--rosa-color);
+  box-shadow: 0 0 3px var(--red-color);
+}
+#showPass {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+#showPass:hover {
+  color: var(--azul-celeste-color);
+}
+.form_instruct {
+  display: block;
+  font-size: 0.8rem;
+  margin: 10px 0;
+  color: var(--gris-color);
+}
+.register_button {
+  background-color: var(--verdeagua-color);
+  padding: 0.8rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.register_button:hover {
+  background-color: var(--azul-celeste-color);
+}
 
-@media screen and (max-width: 600px) {
-  .login_container {
-    padding: 1rem;
-  }
+/*MANAGMENT.EJS*/
+.managment-container h1, h2{
+  font-size: 2rem;
+  color: var(--orange-color);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.managment-container h2{
+  font-size: 1.5rem;
+  color: var(--verdeagua-color);
+}
+.managment-container p{
+  color: var(--primary-color);
+  justify-content: center;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.inv-options {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 0;
+  margin: 1rem 0;
+}
+.inv-options li a {
+  background-color: var(--azul-celeste-color);
+  color: var(--white-color);
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+.inv-options li a:hover {
+  background-color: var(--rosa-color);
+}
+#classificationList {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--white-color);
+  border: 5px solid var(--celeste-color);
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+/* Tabla de inventario */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+}
+#inventoryDisplay th,
+#inventoryDisplay td {
+  border: 1px solid var(--secondary-color);
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+#inventoryDisplay th {
+  background-color: var(--celeste-color);
+  color: var(--white-color);
+  font-weight: bold;
+}
+#inventoryDisplay tr:nth-child(even) {
+  background-color: var(--orange-color);
+  color: var(--white-color);
+}
+#inventoryDisplay tr:hover {
+  background-color: var(--yellow-color);
+}
+/* No JS warning */
+noscript {
+  display: block;
+  background-color: var(--red-color);
+  color: var(--white-color);
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+}
 
-  .login_button {
-    width: 100%;
-  }
+/*ADD-CLASSIFICATION.EJS*/
+.form-add-class {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif;
+}
+.form-fieldset{
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.form-add-class h2 {
+  font-size: 1.5rem;
+  color: var(--yellow-color);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.form-add-class label {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+.form-add-class .form_direct {
+  display: block;
+  font-weight: 600;
+  color: var(--negro-color);
+  margin: 15px 0;
+  text-align: center;
+}
+.form-add-class .form_instruct {
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--gris-color);
+  margin-bottom: 0.2rem;
+}
+.form-add-class input[type="text"] {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+.form-add-class input[type="text"]:focus {
+  border-color:var(--yellow-color);
+  outline: none;
+}
+.form-add-class button {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  background-color:var(--green-color);
+  color:var(--white-color);
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.form-add-class button:hover {
+  background-color: var(--verdeagua-color);
+}
+/*ADD-INCENTORY.EJS*/
+.palabra{
+  text-align: center;
+  justify-content: center;
+  color: var(--secondary-color);
+  font-size: 16px;
+}
+.add-inv-container p{
+  color:var(--primary-color);
+}
+.add-inv-container{
+  margin:2rem ;
+
 }
