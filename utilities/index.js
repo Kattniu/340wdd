@@ -9,19 +9,15 @@ const Util = {};
  * - Builds a <ul> navigation list with links to each classification
  ************************** */
 Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications();
+  let data = await invModel.getClassifications(); //(invmodel.getclass..)aqui se llama a la base de datos 
   let list = "<ul>";
   list += '<li><a href="/" title="Home page">Home</a></li>';
   data.rows.forEach((row) => {
     list += "<li>";
     list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>";
+      '<a href="/inv/type/' + row.classification_id + '" title="See our inventory of ' +
+      row.classification_name + ' vehicles">' +
+      row.classification_name + "</a>";
     list += "</li>";
   });
   list += "</ul>";
@@ -47,8 +43,10 @@ Util.buildClassificationDropdown = async function (classification_id) {
 };
 
 /* **************************************
+*BUILD THE CLASSIFICATION VIEW HTML
  * Builds the vehicle list grid for a classification
  * - Displays thumbnail, make, model, price, miles
+ * Muestra una lista de vehículos de una misma categoría o clasificación (como SUVs, sedanes, etc).
  ************************************ */
 Util.buildClassificationGrid = async function (data) {
   let grid;
@@ -90,6 +88,7 @@ Util.buildClassificationGrid = async function (data) {
 /* **************************************
  * Builds the inventory grid for a single vehicle
  * - Displays full details of the vehicle
+ * Muestra los detalles completos de un solo vehículo.
  ************************************ */
 Util.buildInventoryGrid = async function (data) {
   let grid;

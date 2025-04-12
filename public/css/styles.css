@@ -356,7 +356,7 @@ nav ul a:hover {
   border: 1px solid var(--rosa-color);
   background-color: var(--primary-color);
   border-radius: 0.5rem;
-  color: var(--black-color);
+  color: var(--gris-color);
   font-size: 1rem;
 }
 .login_form_part input:focus {
@@ -520,6 +520,16 @@ form#account_registration {
   color: var(--primary-color);
   font-size: 1rem;
 }
+
+.class_lists__image img {
+  width: 300px;
+  height: 210px;
+  object-fit:fill;
+  overflow: hidden;
+  /* max-width: 200px; */
+  /* max-height: 400px; */
+}
+
 /* Tabla de inventario */
 #inventoryDisplay {
   width: 100%;

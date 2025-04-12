@@ -70,7 +70,6 @@ app.use(utilities.checkJWTToken);
 /* ===============================
  * 4. CONFIGURACIÓN DE VISTAS
  * =============================== */
-
 // Motor de plantillas EJS + uso de layouts
 app.set("view engine", "ejs");
 app.use(expressLayouts);

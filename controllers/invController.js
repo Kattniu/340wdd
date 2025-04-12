@@ -157,7 +157,6 @@ invCont.addInv = async function(req,res){
         })
     }
 }
-
 // ====================================
 // API JSON: Obtener autos por categoría
 // ====================================
@@ -170,7 +169,6 @@ invCont.getInventoryJSON = async function (req, res, next) {
         next(new Error("No data found"))
     }
 }
-
 // =============================
 // Formulario para editar vehículo
 // =============================
@@ -286,5 +284,6 @@ invCont.deleteInv = async function(req,res){
         res.redirect(`/inv/delete/${inv_id}`)
     }
 }
+
 
 module.exports = invCont

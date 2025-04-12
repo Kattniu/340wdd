@@ -3,8 +3,6 @@ const router = new express.Router()
 const utilities = require("../utilities/index.js")
 const errorController = require("../controllers/errorController")
 
-
-
 // File Not Found Route - must be last route in list.
 router.use(utilities.handleErrors(async (req,res, next) => {
     const {status, message } = await errorController.BuildByErrorCode(req)
