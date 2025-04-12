@@ -28,6 +28,7 @@ console.log("DATABASE_URL:", process.env.DATABASE_URL);
  * =============================== */
 const app = express();
 
+
 /* ===============================
  * 3. MIDDLEWARES GENERALES
  * =============================== */
