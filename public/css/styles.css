@@ -668,3 +668,48 @@ noscript {
   transform: scale(1.05); 
 
 }
+#inv-display {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centra todos los <li> */
+  gap: 20px;
+}
+
+#inv-display li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 300px;
+  width: 90%; /* Que se adapte en pantallas pequeñas */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.class_lists_image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.class_lists_image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Media query para pantallas grandes (como laptops o escritorio) */
+@media (min-width: 768px) {
+  #inv-display li {
+    width: 45%;
+  }
+}
+
+/* Para pantallas aún más grandes (ej: desktop) */
+@media (min-width: 1024px) {
+  #inv-display li {
+    width: 30%;
+  }
+}

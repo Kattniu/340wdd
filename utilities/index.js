@@ -46,7 +46,7 @@ Util.buildClassificationDropdown = async function (classification_id) {
 *BUILD THE CLASSIFICATION VIEW HTML
  * Builds the vehicle list grid for a classification
  * - Displays thumbnail, make, model, price, miles
- * Muestra una lista de vehículos de una misma categoría o clasificación (como SUVs, sedanes, etc).
+ * - Links to vehicle detail page
  ************************************ */
 Util.buildClassificationGrid = async function (data) {
   let grid;
