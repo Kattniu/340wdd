@@ -183,8 +183,7 @@ Util.accountTypeCheck = (req, res, next) => {
       req.cookies.jwt &&
       !(
         res.locals.user.account_type === "Admin" ||
-        res.locals.user.account_type === "Employee" ||
-        res.locals.user.account_type === "Client"
+        res.locals.user.account_type === "Employee" 
       )
     ) {
       req.flash(

@@ -8,6 +8,7 @@ const invValidate = require('../utilities/inventory-validation.js')
 // Route to load the vehicle management view (must be logged in)
 router.get("/",
     utilities.checkLogin, 
+    utilities.accountTypeCheck, //Agregado para restringir acceso por tipo de cuenta
     utilities.handleErrors(invController.buildVehicleManager))
 
 // Route to show the form to add a new classification (admin only)
