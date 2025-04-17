@@ -1,9 +1,44 @@
 <% if (title) { %>
-    <h1>
-        <%= title %>
-
-    </h1>
-    <% } else { res.redirect('/') } %>
-
-<%# messages() %>
-<%- grid %>
+    <h1><%= title %></h1>
+  <% } else { res.redirect('/') } %>
+  
+  <%- grid %>
+  
+  <!-- Show comments -->
+  <section id="comments">
+    <h2>Comments</h2>
+    <% if (comments && comments.length > 0) { %>
+      <ul>
+        <% comments.forEach(comment => { %>
+          <li>
+            <p><strong><%= comment.account_firstname %> <%= comment.account_lastname %>:</strong> <%= comment.comment_text %></p>
+            <p><em><%= new Date(comment.comment_date).toLocaleDateString() %></em></p>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No comments yet.</p>
+    <% } %>
+  </section>
+  
+  <% if (locals.loggedin) { %>
+    <section id="add-comment">
+      <h3>Add a Comment</h3>
+      <% if (errors) { %>
+        <ul class="notice">
+          <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+      <form action="/account/comments" method="post">
+        <label for="comment_text">Your comment:</label><br>
+        <textarea name="comment_text" id="comment_text" rows="4" required></textarea><br>
+        <input type="hidden" name="inv_id" id="inv_id" value="<%= inv_id %>">
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  <% } else { %>
+    <p><a href="/account/login">Log in</a> to leave a comment.</p>
+  <% } %>
+  

@@ -10,14 +10,81 @@ accountModel = require("../models/account-model.js");  // Modelo de cuentas de u
 /* ****************************************
  *  Deliver login view
  * *************************************** */
+
 async function buildLogin(req, res, next) {
   // Renderiza la vista de login
   let nav = await utilities.getNav();  // Obtiene la navegación
   res.render("./account/login.ejs", {
-    title: "Login",  // Título de la página
-    nav: nav,  // Navegación a pasar a la vista
-    errors: null,  // No hay errores al principio
-  });
+  title: "Login",  // Título de la página
+  nav: nav,  // Navegación a pasar a la vista
+  errors: null,  // No hay errores al principio
+    });
+  }
+/* ****************************************
+ *  Process login request
+ * *************************************** */
+async function accountLogin(req, res, next) {
+  let nav = await utilities.getNav();
+  const { account_email, account_password } = req.body;
+
+  const user = await accountModel.getAccountByEmail(account_email);
+
+  if (!user) {
+    req.flash("notice", "Please check your credentials and try again...");
+    return res.status(400).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      account_email,
+    });
+  }
+
+  try {
+    if (await bcrypt.compare(account_password, user.account_password)) {
+      delete user.account_password;
+
+      // Guardar en sesión
+      req.session.accountData = {
+        account_id: user.account_id,
+        account_firstname: user.account_firstname,
+        account_lastname: user.account_lastname,
+        account_email: user.account_email,
+        account_type: user.account_type
+      };
+
+      console.log("✅ accountData guardado en sesión:", req.session.accountData);
+
+      // Crear JWT
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: 3600 * 1000,
+      });
+
+      // Guardar cookie
+      const cookieOptions = {
+        httpOnly: true,
+        maxAge: 3600 * 1000,
+        ...(process.env.NODE_ENV !== "development" && { secure: true })
+      };
+      res.cookie("jwt", accessToken, cookieOptions);
+
+      // 🔐 Esperar a que la sesión se guarde antes de redirigir
+      req.session.save(() => {
+        return res.redirect("/account/");
+      });
+
+    } else {
+      req.flash("message notice", "Please check your credentials and try again....");
+      return res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      });
+    }
+  } catch (error) {
+    console.error("Access Forbidden:", error);
+    return next(error);
+  }
 }
 
 /* ****************************************

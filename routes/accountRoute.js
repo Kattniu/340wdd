@@ -3,6 +3,7 @@ const express = require("express");
 
 // Create a new Express Router instance / Crea una nueva instancia del enrutador de Express
 const router = new express.Router();
+const invController = require("../controllers/invController");
 
 // Import utility functions (e.g., checkLogin, handleErrors) / Importa funciones de utilidad
 const utilities = require("../utilities/index.js");
@@ -19,6 +20,9 @@ console.log("in accountRoute.js");
 // =========================
 // 📌Routes for user accounts / Rutas para cuentas de usuario
 // =========================
+
+router.post("/comments", utilities.checkLogin, invController.addComment);
+
 
 // Account home page (only accessible if logged in) / Página principal de la cuenta (solo si estás logueado)
 router.get(

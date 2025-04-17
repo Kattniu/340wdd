@@ -5,6 +5,7 @@ const invController = require("../controllers/invController")
 const utilities = require("../utilities/index.js")
 const invValidate = require('../utilities/inventory-validation.js')
 
+
 // Route to load the vehicle management view (must be logged in)
 router.get("/",
     utilities.checkLogin, 

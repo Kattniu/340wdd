@@ -43,6 +43,8 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
+  cookie: { secure: false }
+
 }));
 
 // Middleware de mensajes flash (para notificaciones)
